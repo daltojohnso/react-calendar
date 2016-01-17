@@ -1,0 +1,235 @@
+$fonts: Lucida Grande, Lucida Sans, Arial, sans-serif;
+$calendar-header-height: 3em;
+$week-header-height: 2em;
+$calendar-view-height: 36em;
+$button-height: 2.5em;
+$border: 1px solid black;
+$title-height: 1.5em;
+$title-font-size: 28px;
+$day-hover-content: '◄';
+$day-active-background: rgba(0,0,0,0.2);
+
+$bar-color: #cd433a;
+
+@mixin display-flex($direction) {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: $direction;
+  flex-direction: $direction;
+}
+
+@mixin flex($flex) {
+  -webkit-flex: $flex;
+  flex: $flex;
+}
+
+@mixin transition($transition) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+html, body {
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: $fonts;
+}
+
+#content {
+  height: auto;
+  margin-top: 2em;
+}
+
+.cal-parent {
+  box-sizing: content-box;
+  border: $border;
+  height: $calendar-header-height + $week-header-height + $calendar-view-height;
+}
+
+.cal-view {
+  height: $calendar-view-height + $week-header-height;
+  width: 100%;
+}
+
+.cal-month {
+  @include display-flex(column);
+  height: $calendar-view-height;
+  border-left: $border;
+}
+
+.cal-header {
+  height: $calendar-header-height;
+  border: $border;
+
+  > div {
+    text-align: center;
+  }
+
+  p {
+    display: inline-block;
+    margin: 0;
+    line-height: $title-height;
+    height: $title-height;
+    font-size: $title-font-size;
+  }
+}
+
+.cal-buttons {
+  position: absolute;
+  height: $calendar-header-height;
+
+  > img {
+    @include transition(opacity 0.1s ease);
+    position: absolute;
+    cursor: pointer;
+    height: $button-height;
+    margin-top: 3px;
+
+    &:hover {
+      opacity: .5;
+    }
+    &:active {
+      opacity: 1;
+    }
+
+    //change this.
+    &:nth-child(1) {
+      left: 1em;
+    }
+    &:nth-child(2) {
+      left: 5em;
+    }
+    &:nth-child(3) {
+      left: 9em;
+    }
+  }
+}
+
+.cal-noselect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.cal-day-headers {
+  @include display-flex(row);
+  height: $week-header-height;
+
+  div {
+    @include flex(1);
+    border-right: $border;
+    border-bottom: $border;
+    text-align: center;
+
+
+    &:first-child {
+      border-left: $border;
+    }
+  }
+
+  p {
+    display: inline-block;
+    height: $week-header-height;
+    line-height: $week-header-height * 1.125;
+    margin: 0;
+  }
+}
+
+.cal-week {
+  @include display-flex(row);
+  @include flex(1);
+  width: 100%;
+  height: $calendar-view-height / 6;
+}
+
+.cal-day {
+  @include flex(1);
+  border-right: $border;
+  border-bottom: $border;
+  width: 100%;
+  height: $calendar-view-height / 6;
+  cursor: pointer;
+
+  span {
+    color: rgb(171, 171, 171);
+    position: absolute;
+    display: block;
+    margin: 4px;
+  }
+
+  &:hover > span::after {
+    content: $day-hover-content;
+  }
+
+  &:active {
+    background-color: $day-active-background;
+  }
+
+  &:active > span {
+    color: #fff;
+  }
+}
+
+.cal-current-month {
+  span {
+    color: #000;
+  }
+
+  &:active > span {
+    color: #000;
+  }
+
+  > .cal-bar {
+    position: absolute;
+    height: $calendar-view-height / 6;
+    background-color: $bar-color;
+    z-index: -1;
+    width: 0;
+    opacity: 0.8;
+  }
+}
+
+.cal-bar-instant {
+  transition: none !important;
+}
+
+.cal-today {
+  background-color: rgba(0,0,0, 0.1);
+}
+
+@media(max-width: 630px) {
+  .cal-parent {
+    height: 44em;
+  }
+  .cal-header {
+    height: 6em;
+  }
+  .cal-buttons {
+    position: relative;
+
+    > img {
+      position: relative;
+    }
+
+    > img:nth-child(1), > img:nth-child(2), > img:nth-child(3) {
+      left: 0;
+      margin: 3px 12px 0 12px;
+    }
+  }
+}
+
+@media(max-width: 515px) {
+  .cal-header p {
+    /*font-size: 18px;*/
+  }
+
+}
