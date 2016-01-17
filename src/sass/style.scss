@@ -190,7 +190,7 @@ html, body {
   }
 
   > .cal-bar {
-    height: $calendar-view-height / 6;
+    height: 100%;
     background-color: $bar-color;
     z-index: -1;
     width: 0;
