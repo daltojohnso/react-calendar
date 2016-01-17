@@ -30,7 +30,7 @@ export default class Calendar extends React.Component {
                 bar: event.detail.bar,
                 previousBar: [...this.state.bar],
                 previousBarEnd: this.previousBarEnd(this.state.bar),
-                animateBar: false
+                animateBar: true
             });
         }.bind(this));
 

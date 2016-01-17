@@ -15,7 +15,7 @@ export default class CalendarHeader extends React.Component {
     render() {
         const formattedDate = this.props.date.format('MMMM YYYY');
         return (
-            <div className='cal-header' style={{backgroundImage: 'url("./src/img/background.jpg")'}}>
+            <div className='cal-header'>
                 <div className='cal-buttons'>
                     <ImgButton title='Previous' className='cal-prev-button cal-noselect' handler={this.click('prev')} />
                     <ImgButton title='Next' className='cal-next-button cal-noselect' handler={this.click('next')} />

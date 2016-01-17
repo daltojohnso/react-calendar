@@ -30,10 +30,11 @@ export default class Week extends React.Component {
         return (
             <div className='cal-week'>
             {this.getDaysInWeek().map((date, i) => <Day ref={i} key={`day_${i}`}
-                    {...this.props}
-                    date={date}
-                    bar={bar[i]}
-                    previousBar={previousBar[i]} />
+                {...this.props}
+                date={date}
+                bar={bar[date.date()-1]}
+                previousBar={previousBar[date.date()-1]}
+                />
             )}
             </div>
         )

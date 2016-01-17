@@ -164,6 +164,7 @@ html, body {
     position: absolute;
     display: block;
     margin: 4px;
+    z-index: 1;
   }
 
   &:hover > span::after {
@@ -189,7 +190,6 @@ html, body {
   }
 
   > .cal-bar {
-    position: absolute;
     height: $calendar-view-height / 6;
     background-color: $bar-color;
     z-index: -1;

@@ -25,12 +25,15 @@ export default class Month extends React.Component {
         return weeks;
     };
 
-    bar(weekIndex) {
-        return this.props.bar.slice(weekIndex*7, weekIndex*7 + 6);
+    bar(date, weekIndex, prop) {
+        if (weekIndex === 0) {
+            return this.props[prop].slice(0, date.endOf('week').date());
+        } else if (weekIndex === 5) {
+            return this.props[prop].slice(date.startOf('week').date()-1, this.props.date.clone().endOf('week'));
+        } else {
+            return this.props[prop].slice(date.startOf('week').date()-1, date.endOf('week').date());
+        }
     };
-    previousBar(weekIndex) {
-        return this.props.bar.slice(weekIndex*7, weekIndex*7 + 6);
-    }
 
     render() {
         const firstDayOfMonth = this.props.date.clone().startOf('month');
@@ -40,8 +43,10 @@ export default class Month extends React.Component {
             {weeks.map((date, i) => <Week ref={i} key={`week_${i}`}
                 {...this.props}
                 date={date}
-                bar={this.bar.call(this, i)}
-                previousBar={this.previousBar.call(this, i)}
+                bar={this.props.bar}
+                previousBar={this.props.previousBar}
+                //bar={this.bar.call(this, date.clone(), i, 'bar')}
+                //previousBar={this.bar.call(this, date.clone(), i, 'previousBar')}
                 calendarMonth={firstDayOfMonth} />
             )}
             </div>

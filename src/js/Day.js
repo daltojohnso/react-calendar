@@ -41,12 +41,12 @@ export default class Day extends React.Component {
         }
 
         return (
-            <div ref={date.format('YYYY-MM-DD')} className={cls} _onClick={this._onClick}>
+            <div ref={date.format('YYYY-MM-DD')} className={cls} onClick={::this._onClick}>
                 <span className='cal-noselect'>
                     {date.date()}
                 </span>
                 {!!notes.length && <Notes notes={notes} />}
-                {useBar && <Bar ref = 'bar' {...props} day = {date.date()} />}
+                {useBar && <Bar ref='bar' {...props} day={date.date()} />}
             </div>
         );
     };
