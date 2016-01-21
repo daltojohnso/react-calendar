@@ -15,9 +15,8 @@ export default class Week extends React.Component {
         calendarMonth: React.PropTypes.object
     };
 
-    getDaysInWeek() {
+    getDaysInWeek(date) {
         const days = [];
-        const date = this.props.date;
         for (let i = 0; i < 7; i++) {
             days.push(date.clone());
             date.add(1, 'd');
@@ -26,10 +25,10 @@ export default class Week extends React.Component {
     };
 
     render() {
-        const {bar, previousBar} = this.props;
+        const {bar, previousBar, date} = this.props;
         return (
             <div className='cal-week'>
-            {this.getDaysInWeek().map((date, i) => <Day ref={i} key={`day_${i}`}
+            {this.getDaysInWeek(date).map((date, i) => <Day ref={i} key={`day_${i}`}
                 {...this.props}
                 date={date}
                 bar={bar[date.date()-1]}
