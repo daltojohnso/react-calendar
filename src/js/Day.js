@@ -13,7 +13,8 @@ export default class Day extends React.Component {
         bar: React.PropTypes.number,
         previousBar: React.PropTypes.number,
         previousBarEnd: React.PropTypes.number,
-        animateBar: React.PropTypes.bool
+        animateBar: React.PropTypes.bool,
+        view: React.PropTypes.string
     };
     static defaultProps = {
         notes: []
@@ -30,10 +31,10 @@ export default class Day extends React.Component {
     };
 
     render() {
-        const {useBar, notes, date, calendarMonth, ...props} = this.props;
+        const {useBar, notes, date, calendarMonth, view, ...props} = this.props;
 
         let cls = 'cal-day ';
-        if (date.isSame(calendarMonth, 'month')) {
+        if (date.isSame(calendarMonth, view)) {
             cls += 'cal-current-month ';
         }
         if (moment().isSame(date, 'day')) {

@@ -4,16 +4,18 @@ import Note from './Note';
 
 export default class Notes extends React.Component {
     static propTypes = {
-        notes: React.PropTypes.array
+        notes: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.string])
     };
 
     render() {
+        let notes = this.props.notes;
+        notes = typeof notes === 'string' ? [notes] : notes;
         return (
             <div className='cal-notes'>
-                {this.props.notes.map((note, i) => {
+                {notes.map((note, i) => {
                     return <Note key={`key_${i}`} note={note} />
                 })}
             </div>
-        )
+        );
     };
 }
