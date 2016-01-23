@@ -2,7 +2,7 @@
 import React from 'react';
 import moment from 'moment';
 import Day from './Day';
-import WeekHeader from './WeekHeader';
+import DayHeader from './DayHeader';
 import Wrapper from './Wrapper';
 
 export default class CalendarView extends React.Component {
@@ -53,39 +53,30 @@ export default class CalendarView extends React.Component {
             case 'day':
                 return (
                     <div className='cal-view cal-view-day'>
+                        <DayHeader format={daysOfWeekFormat} view={view} />
                         <Day {...::this.getDayProps(date)} calendarMonth={firstDayOfMonth} />
                     </div>);
             case 'week':
                 const days = this.getDaysInWeek(firstDayOfWeek);
                 return (
                     <div className='cal-view cal-view-week'>
-                        <WeekHeader format={daysOfWeekFormat} />
+                        <DayHeader format={daysOfWeekFormat} view={view} />
                         <Wrapper className='cal-week'>
-                        {days.map((day, i) => {
-                            <Day key={`day_${i}`} {...::this.getDayProps(day)} calendarMonth={firstDayOfMonth} />
-                        })}
+                            {days.map((day, i) => <Day key={`day_${i}`} {...::this.getDayProps(day)} calendarMonth={firstDayOfMonth} />, this)}
                         </Wrapper>
                     </div>
                 );
             case 'month':
-                const weeks = this.getWeeksInCalendarMonth(firstDayOfMonth).map((firstDayOfWeek) => {
-                    return this.getDaysInWeek(firstDayOfWeek);
-                }, this);
+                const weeks = this.getWeeksInCalendarMonth(firstDayOfMonth).map(firstDayOfWeek => this.getDaysInWeek(firstDayOfWeek), this);
                 return (
                     <div className='cal-view cal-view-month'>
-                        <WeekHeader format={daysOfWeekFormat} />
+                        <DayHeader format={daysOfWeekFormat} view={view} />
                         <Wrapper className='cal-month'>
-                            {weeks.map((week, i) => {
-                                return (
+                            {weeks.map((week, i) => (
                                     <Wrapper key={`week_${i}`} className='cal-week'>
-                                        {week.map((day, i) => {
-                                            return (
-                                                <Day key={`day_${i}`} {...::this.getDayProps(day)} calendarMonth={firstDayOfMonth} />
-                                            )
-                                        }, this)}
+                                        {week.map((day, i) => <Day key={`day_${i}`} {...::this.getDayProps(day)} calendarMonth={firstDayOfMonth} />, this)}
                                     </Wrapper>
-                                );
-                            }, this)}
+                                ), this)}
                         </Wrapper>
                     </div>
                 );

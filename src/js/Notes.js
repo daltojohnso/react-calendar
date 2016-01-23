@@ -6,6 +6,7 @@ export default class Notes extends React.Component {
     static propTypes = {
         notes: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.string])
     };
+    static defaultProps = {notes: []};
 
     render() {
         let notes = this.props.notes;

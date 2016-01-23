@@ -8,6 +8,7 @@ $title-height: 1.5em;
 $title-font-size: 28px;
 $day-hover-content: '◄';
 $day-active-background: rgba(0,0,0,0.2);
+$day-font-size: 1em;
 
 $bar-color: #cd433a;
 
@@ -120,7 +121,7 @@ html, body {
   user-select: none;
 }
 
-.cal-day-headers {
+.cal-day-header {
   @include display-flex(row);
   height: $week-header-height;
 
@@ -139,8 +140,9 @@ html, body {
   p {
     display: inline-block;
     height: $week-header-height;
-    line-height: $week-header-height * 1.125;
+    line-height: $week-header-height;
     margin: 0;
+    font-size: $day-font-size;
   }
 }
 
@@ -163,7 +165,8 @@ html, body {
     color: rgb(171, 171, 171);
     position: absolute;
     display: block;
-    margin: 4px;
+    margin: .3em .4em;
+    font-size: $day-font-size;
     z-index: 1;
   }
 

@@ -6,7 +6,7 @@ import CalendarView from './CalendarView';
 
 export default class Calendar extends React.Component {
     static propTypes = {
-        //moment format.
+        //moment format ('dd', 'ddd').
         daysOfWeekFormat: React.PropTypes.string,
         useBar: React.PropTypes.bool
     };
@@ -77,17 +77,9 @@ export default class Calendar extends React.Component {
                 <CalendarHeader date={this.state.date} />
                 <CalendarView
                     ref='cal-view'
-                    view={this.state.view}
-                    useBar={this.props.useBar}
-                    date={this.state.date}
-                    daysOfWeekFormat={this.props.daysOfWeekFormat}
-                    notes={this.state.notes}
-                    bar={this.state.bar}
-                    previousBar={this.state.previousBar}
-                    previousBarEnd={this.state.previousBarEnd}
-                    animateBar={this.state.animateBar}
+                    {...this.props}
+                    {...this.state}
                 />
-
             </div>
         )
     };

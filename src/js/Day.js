@@ -7,17 +7,14 @@ import Notes from './Notes';
 export default class Day extends React.Component {
     static propTypes = {
         notes: React.PropTypes.array,
-        date: React.PropTypes.object,
+        date: React.PropTypes.object.isRequired,
         useBar: React.PropTypes.bool,
-        calendarMonth: React.PropTypes.object,
+        calendarMonth: React.PropTypes.object.isRequired,
         bar: React.PropTypes.number,
         previousBar: React.PropTypes.number,
         previousBarEnd: React.PropTypes.number,
         animateBar: React.PropTypes.bool,
-        view: React.PropTypes.string
-    };
-    static defaultProps = {
-        notes: []
+        view: React.PropTypes.string.isRequired
     };
 
     //click event to show how bar works. not an actual feature.
@@ -33,16 +30,14 @@ export default class Day extends React.Component {
     render() {
         const {useBar, notes, date, calendarMonth, view, ...props} = this.props;
 
-        let cls = 'cal-day ';
-        if (date.isSame(calendarMonth, view)) {
-            cls += 'cal-current-month ';
-        }
-        if (moment().isSame(date, 'day')) {
-            cls += 'cal-today';
-        }
+        let className = 'cal-day ';
+        if (date.isSame(calendarMonth, view))
+            className += 'cal-current-month ';
+        if (view !== 'day' && moment().isSame(date, 'day'))
+            className += 'cal-today';
 
         return (
-            <div ref={date.format('YYYY-MM-DD')} className={cls} onClick={::this._onClick}>
+            <div ref={date.format('YYYY-MM-DD')} className={className} onClick={::this._onClick}>
                 <span className='cal-noselect'>
                     {date.date()}
                 </span>
