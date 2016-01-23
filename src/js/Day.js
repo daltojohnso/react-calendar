@@ -41,7 +41,7 @@ export default class Day extends React.Component {
                 <span className='cal-noselect'>
                     {date.date()}
                 </span>
-                {!!notes.length && <Notes notes={notes} />}
+                {!!notes && <Notes notes={notes} />}
                 {useBar && <Bar ref='bar' {...props} day={date.date()} />}
             </div>
         );
