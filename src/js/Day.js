@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import moment from 'moment';
+import {barChange} from './Actions';
 import Bar from './Bar';
 import Notes from './Notes';
 
@@ -23,8 +24,7 @@ export default class Day extends React.Component {
         const date = this.props.date.date();
         for (let i = 0; i < date; i++) bar.push(100);
         bar[date-1] = 50;
-        const event = new CustomEvent('rc-bar-change', {detail: {bar}});
-        document.dispatchEvent(event);
+        barChange.dispatch(bar);
     };
 
     render() {

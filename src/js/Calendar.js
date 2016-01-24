@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import moment from 'moment';
+import {dateChange, barChange} from './Actions';
 import CalendarHeader from './CalendarHeader';
 import CalendarView from './CalendarView';
 
@@ -25,19 +26,18 @@ export default class Calendar extends React.Component {
     };
 
     componentDidMount() {
-        document.addEventListener('rc-bar-change', function(event) {
+        barChange.subscribe(function(event) {
             this.setState({
-                bar: event.detail.bar,
+                bar: event.detail,
                 previousBar: [...this.state.bar],
                 previousBarEnd: this.previousBarEnd(this.state.bar),
                 animateBar: true
             });
-        }.bind(this));
+        }, this);
 
-        document.addEventListener('rc-cal-change', function(event) {
-            const action = event.detail.action;
+        dateChange.subscribe(function(event) {
+            const action = event.detail;
             const date = getDate.call(this, action);
-
             if (!(action === 'current' && this.state.date.isSame(moment(), 'day'))) {
                 this.setState({
                     date: date,
@@ -57,11 +57,12 @@ export default class Calendar extends React.Component {
                     return moment();
                 }
             }
-        }.bind(this));
+        }, this);
     };
+
     componentWillUnmount() {
-        document.removeEventListener('rc-bar-change');
-        document.removeEventListener('rc-cal-change');
+        dateChange.unsubscribe();
+        calendarChange.unsubscribe();
     };
 
     previousBarEnd(previousBar) {

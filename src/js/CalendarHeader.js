@@ -1,17 +1,19 @@
 'use strict';
 import React from 'react';
+import {dateChange} from './Actions';
 import ImgButton from './ImgButton';
 
 export default class CalendarHeader extends React.Component {
     static propTypes = {
         date: React.PropTypes.object
     };
+
     click(action) {
         return function() {
-            const event = new CustomEvent('rc-cal-change', {detail: {action}});
-            document.dispatchEvent(event);
-        }
+            dateChange.dispatch(action)
+        };
     };
+
     render() {
         const formattedDate = this.props.date.format('MMMM YYYY');
         return (
