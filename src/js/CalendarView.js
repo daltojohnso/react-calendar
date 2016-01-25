@@ -8,14 +8,9 @@ import Wrapper from './Wrapper';
 export default class CalendarView extends React.Component {
     static propTypes = {
         view: React.PropTypes.string,
-        useBar: React.PropTypes.bool,
         date: React.PropTypes.object,
-        daysOfWeekFormat: React.PropTypes.string,
         notes: React.PropTypes.array,
-        bar: React.PropTypes.array,
-        previousBar: React.PropTypes.array,
-        previousBarEnd: React.PropTypes.number,
-        animateBar: React.PropTypes.bool
+        bar: React.PropTypes.object
     };
 
     getWeeksInCalendarMonth(firstDayOfMonth) {
@@ -40,12 +35,13 @@ export default class CalendarView extends React.Component {
 
     getDayProps(date) {
         const i = date.date() - 1;
-        const {notes, useBar, bar, previousBar, previousBarEnd, animateBar, view} = this.props;
-        return { date, notes: notes[i], useBar, bar: bar[i], previousBar: previousBar[i], previousBarEnd, animateBar, view };
+        const {notes, bar, view} = this.props;
+        const barSegment = Object.assign({}, bar, {percent: bar.percent[i], previousPercent: bar.previousPercent[i]});
+        return { date, notes: notes[i], barSegment, view };
     }
 
     render() {
-        const {date, view, daysOfWeekFormat} = this.props;
+        const {date, view} = this.props;
         const firstDayOfMonth = date.clone().startOf('month');
         const firstDayOfWeek = date.clone().day(-date.day());
 
@@ -53,14 +49,13 @@ export default class CalendarView extends React.Component {
             case 'day':
                 return (
                     <div className='cal-view cal-view-day'>
-                        <DayHeader format={daysOfWeekFormat} view={view} />
                         <Day {...::this.getDayProps(date)} calendarMonth={firstDayOfMonth} />
                     </div>);
             case 'week':
                 const days = this.getDaysInWeek(firstDayOfWeek);
                 return (
                     <div className='cal-view cal-view-week'>
-                        <DayHeader format={daysOfWeekFormat} view={view} />
+                        <DayHeader view={view} />
                         <Wrapper className='cal-week'>
                             {days.map((day, i) => <Day key={`day_${i}`} {...::this.getDayProps(day)} calendarMonth={firstDayOfMonth} />, this)}
                         </Wrapper>
@@ -70,7 +65,7 @@ export default class CalendarView extends React.Component {
                 const weeks = this.getWeeksInCalendarMonth(firstDayOfMonth).map(firstDayOfWeek => this.getDaysInWeek(firstDayOfWeek), this);
                 return (
                     <div className='cal-view cal-view-month'>
-                        <DayHeader format={daysOfWeekFormat} view={view} />
+                        <DayHeader view={view} />
                         <Wrapper className='cal-month'>
                             {weeks.map((week, i) => (
                                     <Wrapper key={`week_${i}`} className='cal-week'>

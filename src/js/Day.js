@@ -9,32 +9,36 @@ export default class Day extends React.Component {
     static propTypes = {
         notes: React.PropTypes.array,
         date: React.PropTypes.object.isRequired,
-        useBar: React.PropTypes.bool,
         calendarMonth: React.PropTypes.object.isRequired,
-        bar: React.PropTypes.number,
-        previousBar: React.PropTypes.number,
-        previousBarEnd: React.PropTypes.number,
-        animateBar: React.PropTypes.bool,
-        view: React.PropTypes.string.isRequired
+        view: React.PropTypes.string.isRequired,
+        barSegment: React.PropTypes.object.isRequired
     };
 
     //click event to show how bar works. not an actual feature.
     _onClick() {
-        const bar = [];
+        const percent = [];
         const date = this.props.date.date();
-        for (let i = 0; i < date; i++) bar.push(100);
-        bar[date-1] = 50;
-        barChange.dispatch(bar);
+        for (let i = 0; i < date-1; i++) percent.push(100);
+        percent[date-1] = 50;
+        barChange.dispatch(percent);
     };
 
     render() {
-        const {useBar, notes, date, calendarMonth, view, ...props} = this.props;
+        const {barSegment, notes, date, calendarMonth, view} = this.props;
 
         let className = 'cal-day ';
-        if (date.isSame(calendarMonth, view))
-            className += 'cal-current-month ';
-        if (view !== 'day' && moment().isSame(date, 'day'))
-            className += 'cal-today';
+        if (view == 'month') {
+            if (date.isSame(calendarMonth, view))
+                className += 'cal-current-month ';
+            else
+                className += 'cal-not-current-month ';
+        } else if (view === 'week') {
+            className += 'cal-current-week ';
+        } else if (view === 'day') {
+            className += 'cal-current-day ';
+        }
+        if (moment().isSame(date, 'day'))
+            className += 'cal-today ';
 
         return (
             <div ref={date.format('YYYY-MM-DD')} className={className} onClick={::this._onClick}>
@@ -42,7 +46,7 @@ export default class Day extends React.Component {
                     {date.date()}
                 </span>
                 {!!notes && <Notes notes={notes} />}
-                {useBar && <Bar ref='bar' {...props} day={date.date()} />}
+                {barSegment.useBar && <Bar {...barSegment} day={date.date()} />}
             </div>
         );
     };

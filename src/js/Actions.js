@@ -1,3 +1,4 @@
+'use strict';
 const action = {
     dispatch: function(detail) {
         document.dispatchEvent(new CustomEvent(this.event, {detail}));
@@ -12,4 +13,5 @@ const action = {
 };
 
 export const dateChange = Object.assign({event: 'rc-date-change'}, action);
+export const viewChange = Object.assign({event: 'rc-view-change'}, action);
 export const barChange = Object.assign({event: 'rc-bar-change'}, action);

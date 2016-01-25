@@ -10,6 +10,7 @@ $day-hover-content: '◄';
 $day-active-background: rgba(0,0,0,0.2);
 $day-font-size: 1em;
 $width: 1200px;
+$barBorder: 2px solid black;
 
 $bar-color: #cd433a;
 
@@ -59,6 +60,23 @@ html, body {
   width: 100%;
 }
 
+.cal-view-week {
+  .cal-week {
+    height: $calendar-view-height;
+    border-left: $border;
+    .cal-day {
+      height: $calendar-view-height;
+    }
+  }
+}
+
+.cal-view-day {
+  .cal-day {
+    border-left: $border;
+    height: 100%;
+  }
+}
+
 .cal-month {
   @include display-flex(column);
   height: $calendar-view-height;
@@ -66,11 +84,18 @@ html, body {
 }
 
 .cal-header {
+  @include display-flex(row);
   height: $calendar-header-height;
   border: $border;
 
+
   > div {
+    @include flex(1);
     text-align: center;
+  }
+
+  .cal-title {
+    @include flex(2);
   }
 
   p {
@@ -80,10 +105,34 @@ html, body {
     height: $title-height;
     font-size: $title-font-size;
   }
+
+  .cal-view-buttons {
+    font-size: $title-font-size;
+    text-align: end;
+    p {
+      cursor: pointer;
+      font-size: 1.2em;
+      margin-right: .5em;
+      &:last-child {
+        margin-right: 1em;
+      }
+    }
+  }
 }
 
-.cal-buttons {
-  position: absolute;
+.cal-button {
+  * {
+    &:hover {
+      opacity: .5;
+    }
+    &:active {
+      opacity: 1;
+    }
+  }
+}
+
+.cal-nav-buttons {
+  position: relative;
   height: $calendar-header-height;
 
   > img {
@@ -92,13 +141,6 @@ html, body {
     cursor: pointer;
     height: $button-height;
     margin-top: 3px;
-
-    &:hover {
-      opacity: .5;
-    }
-    &:active {
-      opacity: 1;
-    }
 
     //change this.
     &:nth-child(1) {
@@ -162,7 +204,6 @@ html, body {
   cursor: pointer;
 
   span {
-    color: rgb(171, 171, 171);
     position: relative;
     display: block;
     margin: .3em .4em;
@@ -182,10 +223,6 @@ html, body {
   &:active {
     background-color: $day-active-background;
   }
-
-  &:active > span {
-    color: #fff;
-  }
 }
 
 .cal-notes {
@@ -198,7 +235,17 @@ html, body {
   }
 }
 
-.cal-current-month {
+.cal-not-current-month {
+  > span {
+    color: rgb(171, 171, 171);
+  }
+
+  &:active > span {
+    color: #fff;
+  }
+}
+
+.cal-current-month, .cal-current-week, .cal-current-day {
   span {
     color: #000;
   }
@@ -213,6 +260,10 @@ html, body {
     z-index: -1;
     width: 0;
     opacity: 0.8;
+  }
+
+  > .cal-bar-end {
+    border-right: $barBorder;
   }
 }
 
@@ -231,7 +282,7 @@ html, body {
   .cal-header {
     height: 6em;
   }
-  .cal-buttons {
+  .cal-nav-buttons {
     position: relative;
 
     > img {

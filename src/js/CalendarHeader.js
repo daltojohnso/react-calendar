@@ -1,6 +1,6 @@
 'use strict';
 import React from 'react';
-import {dateChange} from './Actions';
+import {dateChange, viewChange} from './Actions';
 import ImgButton from './ImgButton';
 
 export default class CalendarHeader extends React.Component {
@@ -8,25 +8,48 @@ export default class CalendarHeader extends React.Component {
         date: React.PropTypes.object
     };
 
-    click(action) {
+    cal(action) {
         return function() {
             dateChange.dispatch(action)
         };
     };
 
+    view(view) {
+        return function() {
+            viewChange.dispatch(view);
+        }
+    };
+
+    formatDateHeader(date, view) {
+        switch(view) {
+            case 'month':
+                return date.format('MMMM YYYY');
+            case 'week':
+                let format = 'MMM Do, YYYY';
+                return `${date.startOf('week').format(format)} - ${date.endOf('week').format(format)}`;
+            case 'day':
+                return date.format('dddd, MMMM Do, YYYY');
+        }
+    }
+
     render() {
-        const formattedDate = this.props.date.format('MMMM YYYY');
+        const {date, view} = this.props;
+        const formattedDate = this.formatDateHeader(date.clone(), view);
         return (
             <div className='cal-header'>
-                <div className='cal-buttons'>
-                    <ImgButton title='Previous' className='cal-prev-button cal-noselect' handler={this.click('prev')} />
-                    <ImgButton title='Next' className='cal-next-button cal-noselect' handler={this.click('next')} />
-                    <ImgButton title='Current' className='cal-return-button' handler={this.click('current')} />
+                <div className='cal-nav-buttons cal-button cal-noselect'>
+                    <ImgButton title='Previous' className='cal-prev-button' handler={this.cal('prev')} />
+                    <ImgButton title='Next' className='cal-next-button' handler={this.cal('next')} />
+                    <ImgButton title='Current' className='cal-return-button' handler={this.cal('current')} />
                 </div>
                 <div className='cal-title'>
                     <p>{formattedDate}</p>
                 </div>
-                <div className='cal-views'></div>
+                <div className='cal-view-buttons cal-button cal-noselect'>
+                    <p onClick={this.view('month')}>M</p>
+                    <p onClick={this.view('week')}>W</p>
+                    <p onClick={this.view('day')}>D</p>
+                </div>
             </div>
         );
     };
