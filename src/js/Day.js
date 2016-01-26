@@ -10,8 +10,7 @@ export default class Day extends React.Component {
         notes: React.PropTypes.array,
         date: React.PropTypes.object.isRequired,
         calendarMonth: React.PropTypes.object.isRequired,
-        view: React.PropTypes.string.isRequired,
-        barSegment: React.PropTypes.object.isRequired
+        view: React.PropTypes.string.isRequired
     };
 
     //click event to show how bar works. not an actual feature.
@@ -26,25 +25,15 @@ export default class Day extends React.Component {
     render() {
         const {barSegment, notes, date, calendarMonth, view} = this.props;
 
-        let className = 'cal-day ';
-        if (view == 'month') {
-            if (date.isSame(calendarMonth, view))
-                className += 'cal-current-month ';
-            else
-                className += 'cal-not-current-month ';
-        } else if (view === 'week') {
-            className += 'cal-current-week ';
-        } else if (view === 'day') {
-            className += 'cal-current-day ';
-        }
-        if (moment().isSame(date, 'day'))
+        let className = 'cal-noselect cal-day ';
+        if (view == 'month')
+            className += date.isSame(calendarMonth, view) ? 'cal-current-month ' : 'cal-not-current-month ';
+        if (view !== 'day' && moment().isSame(date, 'day'))
             className += 'cal-today ';
 
         return (
             <div ref={date.format('YYYY-MM-DD')} className={className} onClick={::this._onClick}>
-                <span className='cal-noselect'>
-                    {date.date()}
-                </span>
+                {view !== 'day' && <span className='cal-noselect'>{date.date()}</span>}
                 {!!notes && <Notes notes={notes} />}
                 {barSegment.useBar && <Bar {...barSegment} day={date.date()} />}
             </div>

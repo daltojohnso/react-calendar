@@ -1,6 +1,5 @@
 'use strict';
 import React from 'react';
-import Note from './Note';
 
 export default class Notes extends React.Component {
     static propTypes = {
@@ -14,7 +13,7 @@ export default class Notes extends React.Component {
         return (
             <div className='cal-notes'>
                 {notes.map((note, i) => {
-                    return <Note key={`key_${i}`} note={note} />
+                    return <span key={`note_${i}`}>{note}</span>;
                 })}
             </div>
         );

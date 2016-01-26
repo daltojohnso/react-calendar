@@ -210,10 +210,15 @@ html, body {
     font-size: $day-font-size;
     z-index: 1;
     float: left;
+    color: #000;
   }
 
   > span {
     margin-right: 100%;
+  }
+
+  &:active > span {
+    color: #000;
   }
 
   &:hover > span::after {
@@ -245,15 +250,8 @@ html, body {
   }
 }
 
-.cal-current-month, .cal-current-week, .cal-current-day {
-  span {
-    color: #000;
-  }
-
-  &:active > span {
-    color: #000;
-  }
-
+.cal-current-month,
+.cal-view-day .cal-day, .cal-view-week .cal-day {
   > .cal-bar {
     height: 100%;
     background-color: $bar-color;
