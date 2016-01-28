@@ -1,49 +1,24 @@
 'use strict';
 import React from 'react';
 import moment from 'moment';
-import {dateChange, barChange, viewChange} from './Actions';
+import {dateChange, viewChange} from './Actions';
 import CalendarHeader from './CalendarHeader';
 import CalendarView from './CalendarView';
 
 export default class Calendar extends React.Component {
     state = {
         date: moment(),
-        notes: [],
-        bar: {
-            percent: [],
-            previousPercent: [],
-            previousBarEnd: 0,
-            animateBar: true,
-            useBar: true
-        },
         view: 'month'
     };
 
     componentDidMount() {
-        barChange.subscribe(function(event) {
-            this.setState({
-                bar: Object.assign({}, this.state.bar, {
-                    percent: event.detail,
-                    previousPercent: [this.state.bar.percent],
-                    previousBarEnd: this.previousBarEnd(this.state.bar.percent),
-                    animateBar: true
-                })
-            });
-        }, this);
-
         dateChange.subscribe(function(event) {
             const action = event.detail;
             const {date, view} = this.state;
             const newDate = getDate.call(this, date.clone(), view, action);
             if (!(action === 'current' && newDate.isSame(date, view))) {
                 this.setState({
-                    date: newDate,
-                    bar: Object.assign({}, this.state.bar, {
-                        percent: [],
-                        previousPercent: [this.state.bar.percent],
-                        previousBarEnd: this.previousBarEnd(this.state.bar),
-                        animateBar: false
-                    })
+                    date: newDate
                 });
             }
 
@@ -69,22 +44,14 @@ export default class Calendar extends React.Component {
 
     componentWillUnmount() {
         dateChange.unsubscribe();
-        barChange.unsubscribe();
         viewChange.unsubscribe();
     };
-
-    previousBarEnd(previousPercent) {
-        for (let i = previousPercent.length-1; i >= 0; i--) {
-            if (previousPercent[i] !== 0) return i+1;
-        }
-        return 1;
-    }
 
     render() {
         return (
             <div className='cal-parent'>
                 <CalendarHeader date={this.state.date} view={this.state.view} />
-                <CalendarView {...this.state} />
+                <CalendarView {...this.state} {...this.props} />
             </div>
         )
     };
