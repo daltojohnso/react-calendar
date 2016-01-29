@@ -33,6 +33,14 @@ $bar-color: #cd433a;
   transition: $transition;
 }
 
+@mixix user-select($select) {
+  -webkit-touch-callout: $select;
+  -webkit-user-select: $select;
+  -moz-user-select: $select;
+  -ms-user-select: $select;
+  user-select: $select;
+}
+
 html, body {
   width: 100%;
   margin: 0 auto;
@@ -50,6 +58,7 @@ html, body {
 }
 
 .cal-parent {
+  @include user-select(none);
   box-sizing: content-box;
   border: $border;
   height: $calendar-header-height + $week-header-height + $calendar-view-height;
@@ -153,14 +162,6 @@ html, body {
       left: 9em;
     }
   }
-}
-
-.cal-noselect {
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 
 .cal-day-header {

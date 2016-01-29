@@ -8,7 +8,7 @@ export default class ImgButton extends React.Component {
             <img src={src || `./src/img/${title}.png`}
                 onClick={handler}
                 title={title}
-                className={'cal-noselect call-img-button '}
+                className={'call-img-button '}
             />
         )
     };

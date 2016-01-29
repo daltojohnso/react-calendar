@@ -4,7 +4,6 @@ import moment from 'moment';
 
 export default class DayHeader extends React.Component {
     static propTypes = {
-        date: React.PropTypes.object,
         view: React.PropTypes.string
     };
 

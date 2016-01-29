@@ -31,42 +31,46 @@ export default class CalendarView extends React.Component {
         return days;
     };
 
+    day(date, view) {
+        return (
+            <div className='cal-view cal-view-day'>
+                <Day date={date} view={view} />
+            </div>
+        );
+    };
+
+    week(date, view) {
+        const firstDayOfWeek = date.startOf('week');
+        const days = this.getDaysInWeek(firstDayOfWeek);
+        return (
+            <div className='cal-view cal-view-week'>
+                <DayHeader view={view} />
+                <Wrapper className='cal-week'>
+                    {days.map((day, i) => <Day key={`day_${i}`} date={day} view={view} />)}
+                </Wrapper>
+            </div>
+        );
+    };
+
+    month(date, view) {
+        const firstDayOfMonth = date.startOf('month');
+        const weeks = this.getWeeksInCalendarMonth(firstDayOfMonth).map(firstDayOfWeek => this.getDaysInWeek(firstDayOfWeek));
+        return (
+            <div className='cal-view cal-view-month'>
+                <DayHeader view={view} />
+                <Wrapper className='cal-month'>
+                    {weeks.map((week, i) => (
+                        <Wrapper key={`week_${i}`} className='cal-week'>
+                            {week.map((day, i) => <Day key={`day_${i}`} date={day} view={view} calendarMonth={firstDayOfMonth} />)}
+                        </Wrapper>
+                    ))}
+                </Wrapper>
+            </div>
+        );
+    };
 
     render() {
         const {date, view} = this.props;
-        const firstDayOfMonth = date.clone().startOf('month');
-        const firstDayOfWeek = date.clone().startOf('week');
-
-        switch(view) {
-            case 'day':
-                return (
-                    <div className='cal-view cal-view-day'>
-                        <Day {...this.props} calendarMonth={firstDayOfMonth} />
-                    </div>);
-            case 'week':
-                const days = this.getDaysInWeek(firstDayOfWeek);
-                return (
-                    <div className='cal-view cal-view-week'>
-                        <DayHeader view={view} />
-                        <Wrapper className='cal-week'>
-                            {days.map((day, i) => <Day key={`day_${i}`} {...this.props} calendarMonth={firstDayOfMonth} date={day} />, this)}
-                        </Wrapper>
-                    </div>
-                );
-            case 'month':
-                const weeks = this.getWeeksInCalendarMonth(firstDayOfMonth).map(firstDayOfWeek => this.getDaysInWeek(firstDayOfWeek), this);
-                return (
-                    <div className='cal-view cal-view-month'>
-                        <DayHeader view={view} />
-                        <Wrapper className='cal-month'>
-                            {weeks.map((week, i) => (
-                                    <Wrapper key={`week_${i}`} className='cal-week'>
-                                        {week.map((day, i) => <Day key={`day_${i}`} {...this.props} calendarMonth={firstDayOfMonth} date={day} />, this)}
-                                    </Wrapper>
-                                ), this)}
-                        </Wrapper>
-                    </div>
-                );
-        }
+        return this[view].call(this, date, view);
     };
 }
