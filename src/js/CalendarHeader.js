@@ -21,7 +21,7 @@ export default class CalendarHeader extends React.Component {
     };
 
     day(date) {
-        return date.format('MMMM YYYY');
+        return date.format('dddd, MMMM Do, YYYY');
     }
 
     week(date) {
@@ -30,7 +30,7 @@ export default class CalendarHeader extends React.Component {
     }
 
     month(date) {
-        return date.format('dddd, MMMM Do, YYYY');
+        return date.format('MMMM YYYY');
     }
 
     render() {

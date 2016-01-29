@@ -50,8 +50,8 @@ export default class Calendar extends React.Component {
     render() {
         return (
             <div className='cal-parent'>
-                <CalendarHeader date={this.state.date} view={this.state.view} />
-                <CalendarView {...this.state} {...this.props} />
+                <CalendarHeader date={this.state.date.clone()} view={this.state.view} />
+                <CalendarView date={this.state.date.clone()} view={this.state.view} {...this.props} />
             </div>
         )
     };
