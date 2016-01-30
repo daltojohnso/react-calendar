@@ -115,7 +115,7 @@ html, body {
     font-size: $title-font-size;
   }
 
-  .cal-view-buttons {
+  .cal-view-options {
     font-size: $title-font-size;
     text-align: end;
     p {
@@ -202,7 +202,6 @@ html, body {
   border-bottom: $border;
   width: 100%;
   height: $calendar-view-height / 6;
-//  cursor: pointer;
 
   span {
     position: relative;
@@ -218,26 +217,8 @@ html, body {
     margin-right: 100%;
   }
 
-//  &:active > span {
-//    color: #000;
-//  }
-
   &:hover > span::after {
     content: $day-hover-content;
-  }
-
-//  &:active {
-//    background-color: $day-active-background;
-//  }
-}
-
-.cal-notes {
-  width: $width / 7 - 2px;
-  overflow-x: hidden;
-  float: left;
-
-  span {
-    word-wrap: break-word;
   }
 }
 
@@ -251,25 +232,6 @@ html, body {
   }
 }
 
-.cal-current-month,
-.cal-view-day .cal-day, .cal-view-week .cal-day {
-  > .cal-bar {
-    height: 100%;
-    background-color: $bar-color;
-    z-index: -1;
-    width: 0;
-    opacity: 0.8;
-  }
-
-  > .cal-bar-end {
-    border-right: $barBorder;
-  }
-}
-
-.cal-bar-instant {
-  transition: none !important;
-}
-
 .cal-today {
   background-color: rgba(0,0,0, 0.1);
 }
@@ -280,6 +242,8 @@ html, body {
   }
   .cal-header {
     height: 6em;
+    width: 100%;
+    display: inline-block;
   }
   .cal-nav-buttons {
     position: relative;
@@ -292,6 +256,10 @@ html, body {
       left: 0;
       margin: 3px 12px 0 12px;
     }
+  }
+
+  .cal-view-options {
+    display: none;
   }
 }
 
