@@ -33,7 +33,7 @@ $bar-color: #cd433a;
   transition: $transition;
 }
 
-@mixix user-select($select) {
+@mixin user-select($select) {
   -webkit-touch-callout: $select;
   -webkit-user-select: $select;
   -moz-user-select: $select;
@@ -57,7 +57,7 @@ html, body {
   margin-top: 2em;
 }
 
-.cal-parent {
+.cal {
   @include user-select(none);
   box-sizing: content-box;
   border: $border;
@@ -202,7 +202,7 @@ html, body {
   border-bottom: $border;
   width: 100%;
   height: $calendar-view-height / 6;
-  cursor: pointer;
+//  cursor: pointer;
 
   span {
     position: relative;
@@ -218,17 +218,17 @@ html, body {
     margin-right: 100%;
   }
 
-  &:active > span {
-    color: #000;
-  }
+//  &:active > span {
+//    color: #000;
+//  }
 
   &:hover > span::after {
     content: $day-hover-content;
   }
 
-  &:active {
-    background-color: $day-active-background;
-  }
+//  &:active {
+//    background-color: $day-active-background;
+//  }
 }
 
 .cal-notes {
@@ -275,7 +275,7 @@ html, body {
 }
 
 @media(max-width: 630px) {
-  .cal-parent {
+  .cal {
     height: 44em;
   }
   .cal-header {

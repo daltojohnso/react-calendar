@@ -44,7 +44,7 @@ export default class CalendarView extends React.Component {
         const days = this.getDaysInWeek(firstDayOfWeek);
         return (
             <div className='cal-view cal-view-week'>
-                <DayHeader view={view} />
+                <DayHeader />
                 <Wrapper className='cal-week'>
                     {days.map((day, i) => <Day key={`day_${i}`} date={day} view={view} />)}
                 </Wrapper>
@@ -57,11 +57,15 @@ export default class CalendarView extends React.Component {
         const weeks = this.getWeeksInCalendarMonth(firstDayOfMonth).map(firstDayOfWeek => this.getDaysInWeek(firstDayOfWeek));
         return (
             <div className='cal-view cal-view-month'>
-                <DayHeader view={view} />
+                <DayHeader />
                 <Wrapper className='cal-month'>
                     {weeks.map((week, i) => (
                         <Wrapper key={`week_${i}`} className='cal-week'>
-                            {week.map((day, i) => <Day key={`day_${i}`} date={day} view={view} calendarMonth={firstDayOfMonth} />)}
+                            {week.map((day, i) => (
+                                <Day key={`day_${i}`}
+                                    date={day} view={view}
+                                    calendarMonth={firstDayOfMonth}
+                                />))}
                         </Wrapper>
                     ))}
                 </Wrapper>

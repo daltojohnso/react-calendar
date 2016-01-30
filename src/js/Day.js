@@ -1,7 +1,6 @@
 'use strict';
 import React from 'react';
 import moment from 'moment';
-import {barChange} from './Actions';
 
 export default class Day extends React.Component {
     static propTypes = {
@@ -9,12 +8,6 @@ export default class Day extends React.Component {
         view: React.PropTypes.string.isRequired,
         calendarMonth: React.PropTypes.object
     };
-
-    _onClick() {
-        const {onClick} = this.props;
-        if (onClick && typeof onClick === 'function')
-            onClick.call(this);
-    }
 
     render() {
         const {date, calendarMonth, view} = this.props;
@@ -26,7 +19,7 @@ export default class Day extends React.Component {
             className += 'cal-today ';
 
         return (
-            <div className={className} onClick={::this._onClick}>
+            <div className={className} >
                 {view !== 'day' && <span>{date.date()}</span>}
             </div>
         );
