@@ -236,7 +236,10 @@ html, body {
   background-color: rgba(0,0,0, 0.1);
 }
 
-@media(max-width: 630px) {
+@media screen and (max-width: 630px) {
+  #content {
+    margin: 0;
+  }
   .cal {
     height: 44em;
   }
@@ -263,7 +266,7 @@ html, body {
   }
 }
 
-@media(max-width: 515px) {
+@media screen and (max-width: 515px) {
   .cal-header p {
     /*font-size: 18px;*/
   }
