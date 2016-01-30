@@ -6,6 +6,14 @@ import CalendarHeader from './CalendarHeader';
 import CalendarView from './CalendarView';
 
 export default class Calendar extends React.Component {
+    static propTypes = {
+        showViewOptions: React.PropTypes.bool,
+        showNavigation: React.PropTypes.bool
+    };
+    static defaultProps = {
+        showViewOptions: true,
+        showNavigation: true
+    };
     state = {
         date: moment(),
         view: 'month'
@@ -48,10 +56,18 @@ export default class Calendar extends React.Component {
     };
 
     render() {
+        const {showViewOptions, showNavigation} = this.props;
+        const {date, view} = this.state;
         return (
             <div className='cal'>
-                <CalendarHeader date={this.state.date.clone()} view={this.state.view} />
-                <CalendarView {...this.props} {...this.state} date={this.state.date.clone()} />
+                <CalendarHeader
+                    date={date.clone()}
+                    view={view}
+                    showViewOptions={showViewOptions}
+                    showNavigation={showNavigation} />
+                <CalendarView
+                    {...this.state}
+                    date={date.clone()} />
             </div>
         )
     };

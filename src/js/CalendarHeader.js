@@ -1,7 +1,8 @@
 'use strict';
 import React from 'react';
 import {dateChange, viewChange} from './Actions';
-import ImgButton from './ImgButton';
+import Navigation from './Navigation';
+import ViewOptions from './ViewOptions';
 
 export default class CalendarHeader extends React.Component {
     static propTypes = {
@@ -34,23 +35,15 @@ export default class CalendarHeader extends React.Component {
     }
 
     render() {
-        const {date, view} = this.props;
+        const {date, view, showViewOptions, showNavigation} = this.props;
         const formattedDate = this[view](date.clone());
         return (
             <div className='cal-header'>
-                <div className='cal-nav-buttons cal-button'>
-                    <ImgButton title='Previous' className='cal-prev-button' handler={this.cal('prev')} />
-                    <ImgButton title='Next' className='cal-next-button' handler={this.cal('next')} />
-                    <ImgButton title='Current' className='cal-return-button' handler={this.cal('current')} />
-                </div>
+                {showNavigation && <Navigation cal={this.cal} />}
                 <div className='cal-title'>
                     <p>{formattedDate}</p>
                 </div>
-                <div className='cal-view-buttons cal-button'>
-                    <p onClick={this.view('month')}>M</p>
-                    <p onClick={this.view('week')}>W</p>
-                    <p onClick={this.view('day')}>D</p>
-                </div>
+                {showViewOptions && <ViewOptions view={this.view} />}
             </div>
         );
     };
