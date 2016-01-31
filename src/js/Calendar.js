@@ -4,6 +4,7 @@ import moment from 'moment';
 import {dateChange, viewChange} from './Actions';
 import CalendarHeader from './CalendarHeader';
 import CalendarView from './CalendarView';
+import DayHeader from './DayHeader';
 
 export default class Calendar extends React.Component {
     static propTypes = {
@@ -65,6 +66,7 @@ export default class Calendar extends React.Component {
                     view={view}
                     showViewOptions={showViewOptions}
                     showNavigation={showNavigation} />
+                {view !== 'day' && <DayHeader />}
                 <CalendarView
                     {...this.state}
                     date={date.clone()} />

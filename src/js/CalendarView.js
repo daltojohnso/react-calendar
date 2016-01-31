@@ -2,7 +2,6 @@
 import React from 'react';
 import moment from 'moment';
 import Day from './Day';
-import DayHeader from './DayHeader';
 import Wrapper from './Wrapper';
 import {dateChange} from './Actions';
 
@@ -78,7 +77,6 @@ export default class CalendarView extends React.Component {
         const {date, view} = this.props;
         return (
             <div className={`cal-view cal-view-${view}`} onWheel={this.onWheel}>
-                {view !== 'day' && <DayHeader />}
                 {this[view].call(this, date, view)}
             </div>
         )
