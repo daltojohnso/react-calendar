@@ -10,15 +10,11 @@ export default class CalendarHeader extends React.Component {
     };
 
     cal(action) {
-        return function() {
-            dateChange.dispatch(action)
-        };
+        dateChange.dispatch(action)
     };
 
     view(view) {
-        return function() {
-            viewChange.dispatch(view);
-        }
+        viewChange.dispatch(view);
     };
 
     day(date) {

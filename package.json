@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "moment": "^2.10.0",
-    "react": "^0.13.3"
+    "react": "^0.14.7"
   },
   "devDependencies": {
     "babel-jest": "^6.0.1",
@@ -27,21 +27,5 @@
     "reactify": "^1.1.1",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.7.0"
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "jest": {
-    "testRunner": "<rootDir>/node_modules/jest-cli/src/testRunners/jasmine/jasmine2",
-    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
-    "unmockedModulePathPatterns": [
-      "<rootDir>/node_modules/react",
-      "<rootDir>/node_modules/react-dom",
-      "<rootDir>/node_modules/react-addons-test-utils",
-      "<rootDir>/node_modules/fbjs"
-    ],
-    "modulePathIgnorePatterns": [
-      "<rootDir>/node_modules/"
-    ]
   }
 }

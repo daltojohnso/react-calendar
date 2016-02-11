@@ -13,7 +13,7 @@ export default class Day extends React.Component {
         const {date, calendarMonth, view} = this.props;
 
         let className = 'cal-day ';
-        if (view == 'month')
+        if (view === 'month')
             className += date.isSame(calendarMonth, 'month') ? 'cal-current-month ' : 'cal-not-current-month ';
         if (view !== 'day' && moment().isSame(date, 'day'))
             className += 'cal-today ';
