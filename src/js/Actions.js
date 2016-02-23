@@ -1,16 +1,17 @@
 'use strict';
-export const action = {
-    dispatch: function(detail) {
-        document.dispatchEvent(new CustomEvent(this.event, {detail}));
-    },
-    subscribe: function(callback, thisArg) {
-        this.callback = callback;
-        document.addEventListener(this.event, callback.bind(thisArg));
-    },
-    unsubscribe: function() {
-        document.removeEventListener(this.event, this.callback);
-    }
+export function Action(event) {
+    this.event = event;
+};
+Action.prototype.dispatch = function(detail) {
+    document.dispatchEvent(new CustomEvent(this.event, {detail}));
+};
+Action.prototype.subscribe = function(callback, thisArg) {
+    this.callback = callback;
+    document.addEventListener(this.event, callback.bind(thisArg));
+};
+Action.prototype.unsubscribe = function() {
+    document.removeEventListener(this.event, this.callback);
 };
 
-export const dateChange = Object.assign({event: 'rc-date-change'}, action);
-export const viewChange = Object.assign({event: 'rc-view-change'}, action);
+export const dateChange = new Action('rc-date-change');
+export const viewChange = new Action('rc-view-change');
