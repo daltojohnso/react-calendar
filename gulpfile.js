@@ -8,6 +8,7 @@ var babel = require('babelify');
 var concat = require('gulp-concat');
 var jasmine = require('gulp-jasmine');
 var sass = require('gulp-sass');
+var server = require('gulp-server-livereload');
 
 function build(watch) {
     var bundler = watchify(
@@ -58,7 +59,16 @@ gulp.task('sass', function() {
         .pipe(gulp.dest('build'));
 });
 
-gulp.task('default', ['sass', 'watch-build', 'watch-style']);
+gulp.task('webserver', function() {
+  gulp.src('./')
+    .pipe(server({
+      livereload: true,
+      directoryListing: true,
+      open: true
+    }));
+});
+
+gulp.task('default', ['sass', 'watch-build', 'watch-style', 'webserver']);
 
 function style() {
     return gulp.src('src/sass/*.scss')

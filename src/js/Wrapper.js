@@ -7,6 +7,6 @@ export default class Wrapper extends React.Component {
             <div className={this.props.className}>
                 {this.props.children.map(child => child)}
             </div>
-        )
+        );
     }
 }

@@ -1,7 +1,7 @@
 'use strict';
 export function Action(event) {
     this.event = event;
-};
+}
 Action.prototype.dispatch = function(detail) {
     document.dispatchEvent(new CustomEvent(this.event, {detail}));
 };
